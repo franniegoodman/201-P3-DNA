@@ -5,10 +5,12 @@ public class LinkStrand implements IDnaStrand{
 
         String info;
         Node next;
+        Node prev;
 
         public Node(String info) {
             this.info = info;
             this.next = null;
+            this.prev = null;
         }
     }
 
@@ -52,8 +54,15 @@ public class LinkStrand implements IDnaStrand{
 
     @Override
     public IDnaStrand append(String dna) {
-        myLast.next = new Node(dna);
-        myLast = myLast.next;
+        Node newNode = new Node(dna);
+        if (myLast != null){
+            myLast.next = newNode;
+        }
+        else{
+            myFirst = newNode;
+        }
+        newNode.prev = myLast;
+        myLast = newNode;
         mySize += dna.length();
         myAppends++;
         return this;
@@ -61,9 +70,19 @@ public class LinkStrand implements IDnaStrand{
 
     @Override
     public IDnaStrand reverse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reverse'");
+        Node current = myLast; 
+        StringBuilder strBuilder = new StringBuilder(current.info);
+        IDnaStrand newStrand = new LinkStrand(strBuilder.reverse().toString());
+        
+        while (current.prev != null) {
+            current = current.prev;
+            strBuilder = new StringBuilder(current.info);
+            newStrand.append(strBuilder.reverse().toString());
+        }
+
+        return newStrand;
     }
+
 
     @Override
     public int getAppendCount() {
