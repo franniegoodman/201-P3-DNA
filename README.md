@@ -1,4 +1,4 @@
-# Project 3: DNA
+nn# Project 3: DNA
 
 This is the directions document for Project 3 DNA in CompSci 201 at Duke University, Fall 2023.
 

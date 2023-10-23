@@ -46,6 +46,7 @@ public class StringBuilderStrand implements IDnaStrand {
 
 	@Override
 	public String toString() {
+		
 		return myInfo.toString();
 	}
 
