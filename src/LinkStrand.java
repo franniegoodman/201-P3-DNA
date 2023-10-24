@@ -72,15 +72,15 @@ public class LinkStrand implements IDnaStrand{
     public IDnaStrand reverse() {
         Node current = myLast; 
         StringBuilder strBuilder = new StringBuilder(current.info);
-        IDnaStrand newStrand = new LinkStrand(strBuilder.reverse().toString());
+        IDnaStrand revStrand = new LinkStrand(strBuilder.reverse().toString());
         
         while (current.prev != null) {
             current = current.prev;
             strBuilder = new StringBuilder(current.info);
-            newStrand.append(strBuilder.reverse().toString());
+            revStrand.append(strBuilder.reverse().toString());
         }
 
-        return newStrand;
+        return revStrand;
     }
 
 
@@ -103,7 +103,23 @@ public class LinkStrand implements IDnaStrand{
 
     @Override
     public char charAt(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'charAt'");
+        if (index >= mySize || index < 0){
+            throw new IndexOutOfBoundsException("invalid index");
+        }
+        if (index< myIndex){
+            myCurrent = myFirst;
+            myLocalIndex = 0;
+            myIndex = 0;
+        }
+        while (myIndex + myCurrent.info.length() - myLocalIndex<= index){
+                myIndex += myCurrent.info.length() - myLocalIndex;
+                myLocalIndex =0;
+                myCurrent = myCurrent.next;
+            }
+            myLocalIndex += index - myIndex;
+            myIndex = index;
+        return myCurrent.info.charAt(myLocalIndex);
     }
-}
+
+        
+    }
